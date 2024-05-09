@@ -9,6 +9,10 @@
     align-items: center;
 }
 
+.start-button {
+    margin-left: 20px;
+}
+
 .container {
     
     max-width: 100%;
