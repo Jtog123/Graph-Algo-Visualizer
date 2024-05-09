@@ -1,10 +1,17 @@
+
+import Queue from './queue.js';
+
 // Define the grid dimensions
 const numRows = 25;
 const numCols = 25;
 
+
+
+//const pair = { first: 4, second: 8 };
+//console.log(pair.second);
+
 // Get a reference to the grid container
 const gridContainer = document.getElementById("container");
-
 
 
 // Generate the grid of squares
@@ -25,26 +32,24 @@ for (let i = 0; i < numRows; i++) {
 }
 
 
+var grid = gridContainer;
+
+
+
 //Create visited matrix
 /////////////////////////////////
-visited = [];
+var visited = [];
 
 // Generate the grid of squares
 for (let i = 0; i < numRows; i++) {
   visited[i] = [];
   for (let j = 0; j < numCols; j++) {
-    visited[i][j] = 0
+    visited[i][j] = false;
   }
 }
 
 console.log(visited);
 
-// Algo Start
-///////////////////////////////////
-function startAlgo(currentSquare) {
-  console.log("Startig algo");
-  console.log(currentSquare);
-}
 
 // Set Start Square
 ///////////////////////////////////
@@ -53,7 +58,7 @@ function startAlgo(currentSquare) {
 
 
 let canSetStart = true;
-let startSqaure = null;
+let startSqaure = {first:null, second:null};
 let startButton = document.getElementById("start-button");
 //startButton.addEventListener("click");
 
@@ -62,7 +67,8 @@ for(let i = 0; i < numRows; i++) {
     document.getElementById(`square-${i}-${j}`).onclick = function() {
       if(canSetStart) {
         this.style.backgroundColor = "yellow";
-        startSqaure = this;
+        //startSqaure = this;
+        startSqaure.first = i; startSqaure.second = j;
         canSetStart = false
       }
 
@@ -71,22 +77,107 @@ for(let i = 0; i < numRows; i++) {
 
       if(canSetStart === false) { // start has been set
         startButton.addEventListener("click", function() {
-          startAlgo(startSqaure);
+          startAlgo(startSqaure, 100);
+          
         })
       }
-      //need to pass in args???? i and j 
-
-        //if(startButton.onclick) {
-         // console.log("Starting the Algo");
-        //}
-        
-      
-
-
 
     }
   }
 }
+/*
+// Algo Start
+///////////////////////////////////
+function startAlgo(currentSquare, delay) {
+  let q = new Queue();
+  visited[currentSquare.first][currentSquare.second] = true;
+  q.enqueue(currentSquare);
+  console.log(q);
+
+  let n = numRows;
+  let m = numCols;
+
+  while(! q.isEmpty()) {
+    let row = q.front().first;
+    let col = q.front().second;
+
+    q.dequeue();
+
+    //Neighbors
+    for(let deltaR = -1; deltaR <= 1; deltaR++) {
+      for(let deltaC = -1; deltaC <= 1; deltaC++) {
+        if(Math.abs(deltaR) == Math.abs(deltaC)) {continue;}
+
+        let nRow = row + deltaR;
+        let nCol = col + deltaC;
+
+        if(nRow >= 0 && nRow < n &&
+          nCol >= 0 && nCol < m &&
+          !visited[nRow][nCol] ) {
+            visited[nRow][nCol] = true;
+            const squareId = `square-${nRow}-${nCol}`;
+            const square = document.getElementById(squareId);
+            square.style.backgroundColor = "green";
+
+
+            q.enqueue({first: nRow, second: nCol});
+          }
+      }
+    }
+    setTimeout(step, delay);
+  }
+  step()
+
+  console.log(n,m);
+}
+*/
+
+function startAlgo(currentSquare, delay) {
+  let q = new Queue();
+  visited[currentSquare.first][currentSquare.second] = true;
+  q.enqueue(currentSquare);
+  console.log(q);
+
+  let n = numRows;
+  let m = numCols;
+
+  function step() {
+    if(q.isEmpty()) return;
+
+    let row = q.front().first;
+    let col = q.front().second;
+
+    q.dequeue();
+
+    //Neighbors
+    for(let deltaR = -1; deltaR <= 1; deltaR++) {
+      for(let deltaC = -1; deltaC <= 1; deltaC++) {
+        if(Math.abs(deltaR) == Math.abs(deltaC)) {continue;}
+
+        let nRow = row + deltaR;
+        let nCol = col + deltaC;
+
+        if(nRow >= 0 && nRow < n &&
+          nCol >= 0 && nCol < m &&
+          !visited[nRow][nCol] ) {
+            visited[nRow][nCol] = true;
+            const squareId = `square-${nRow}-${nCol}`;
+            const square = document.getElementById(squareId);
+            square.style.backgroundColor = "green";
+
+
+            q.enqueue({first: nRow, second: nCol});
+          }
+      }
+    }
+    setTimeout(step, delay);
+  }
+  step()
+
+  console.log(n,m);
+}
+
+
 
 
 
