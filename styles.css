@@ -2,7 +2,7 @@
 .outer-container {
     
     display: flex;
-    background-color: red;
+    
     height: 100vh;
     width:100vw;
     justify-content: center;
@@ -21,8 +21,13 @@
     gap: 2px; /* Gap between squares */
 }
 
+/*
+background-color: radial-gradient(#e66465, #9198e5);
+*/
+
 .square {
-    background-color: rgb(0, 0, 0);
+    background:radial-gradient(#F4F4F4, #3772FF);
+    border-radius: 5px;
     border: 1px solid black;
     aspect-ratio: 1; /* Ensure squares maintain aspect ratio */
 }
