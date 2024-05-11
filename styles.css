@@ -21,6 +21,10 @@
     gap: 2px; /* Gap between squares */
 }
 
+.algo {
+    margin-left: 10px;
+}
+
 /*
 background-color: radial-gradient(#e66465, #9198e5);
 */

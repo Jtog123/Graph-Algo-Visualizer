@@ -28,9 +28,6 @@ for (let i = 0; i < numRows; i++) {
 }
 
 
-var grid = gridContainer;
-
-
 
 //Create visited matrix
 /////////////////////////////////
@@ -57,6 +54,21 @@ let canSetStart = true;
 let startSqaure = {first:null, second:null};
 let startButton = document.getElementById("start-button");
 //startButton.addEventListener("click");
+let selector = document.getElementById("selector");
+
+
+// selector.addEventListener("change", function() {
+//   const selectedVal = selector.value;
+//   console.log(selectedVal);
+// })
+
+
+
+// for (let i = 0; i < selector.options.length; i++) {
+//   const option = selector.options[i];
+//   console.log(option.value); // Access value of the option
+// }
+
 
 for(let i = 0; i < numRows; i++) {
   for(let j = 0; j < numCols; j++) {
@@ -70,18 +82,44 @@ for(let i = 0; i < numRows; i++) {
       }
 
       console.log(startSqaure);
-      console.log(startButton);
+ 
+      //let option = selector.options[0];
+      console.log(option.value);
 
-      if(canSetStart === false) { // start has been set
-        startButton.addEventListener("click", function() {
-          startAlgo(startSqaure, 100);
-          
+      if(canSetStart === false ) {
+        let selectedVal = null;
+        selector.addEventListener("click", function() {
+          selectedVal = selector.value;
+          console.log(selectedVal);
         })
+        if(selectedVal !== 'option') {
+          startButton.addEventListener("click", function() {
+              //const selectedVal = selector.value; 
+            if(selectedVal === 'bfs') {
+              startAlgo(startSqaure, 100);
+            }
+          })
+            
+
+          
+        }
+        //option = selector.options[1];
+        //const option = selector.options[k];
+          // start has been set
+
       }
+    
+      } 
+      // if(canSetStart === false) { // start has been set
+      //   startButton.addEventListener("click", function() {
+      //     startAlgo(startSqaure, 100);
+          
+      //   })
+      // }
 
     }
   }
-}
+
 
 
 function startAlgo(currentSquare, delay) {
